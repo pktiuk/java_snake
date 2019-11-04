@@ -29,8 +29,10 @@ public class Gui {
         f.setVisible(true);
     }
 }
+
 /**
- * <code>ArenaPanel</code>  - panel containing visualization of snake's arena (snake,walls,apples)
+ * <code>ArenaPanel</code> - panel containing visualization of snake's arena
+ * (snake,walls,apples)
  */
 class ArenaPanel extends JPanel implements PropertyChangeListener {
 
@@ -43,6 +45,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private int defaultY = 15;
     private int gridX = 40;
     private int gridY = 40;
+    private Color snakeColor = Color.GREEN;
+    private Color appleColor = Color.RED;
+    private Color wallColor = Color.WHITE;
 
     public ArenaPanel() {
 
@@ -65,8 +70,8 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         g.fillRect(0, 0, defaultX * gridX, defaultY * gridY);
     }
 
-    protected void drawBox(Graphics g, int x, int y) {
-        g.setColor(Color.WHITE);
+    protected void drawApple(Graphics g, int x, int y) {
+        g.setColor(appleColor);
         g.fillRect(x * defaultX, y * defaultY, defaultX, defaultY);
     }
 }
