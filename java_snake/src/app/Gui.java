@@ -24,13 +24,15 @@ public class Gui {
     private static void createAndShowGUI() {
         JFrame f = new JFrame("JavaSnake");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new MyPanel());
+        f.add(new ArenaPanel());
         f.pack();
         f.setVisible(true);
     }
 }
-
-class MyPanel extends JPanel implements PropertyChangeListener{
+/**
+ * <code>ArenaPanel</code>  - panel containing visualization of snake's arena (snake,walls,apples)
+ */
+class ArenaPanel extends JPanel implements PropertyChangeListener {
 
     /**
      *
@@ -42,7 +44,7 @@ class MyPanel extends JPanel implements PropertyChangeListener{
     private int gridX = 40;
     private int gridY = 40;
 
-    public MyPanel() {
+    public ArenaPanel() {
 
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
@@ -50,10 +52,10 @@ class MyPanel extends JPanel implements PropertyChangeListener{
     public Dimension getPreferredSize() {
         return new Dimension(defaultX * gridX, defaultY * gridY);
     }
+
     public void propertyChange(PropertyChangeEvent evt) {
-        if(evt.getPropertyName()=="snakeModel")
-        {
-            
+        if (evt.getPropertyName() == "snakeModel") {
+
         }
     }
 
@@ -65,6 +67,6 @@ class MyPanel extends JPanel implements PropertyChangeListener{
 
     protected void drawBox(Graphics g, int x, int y) {
         g.setColor(Color.WHITE);
-        g.fillRect(x*defaultX, y*defaultY, defaultX, defaultY);
+        g.fillRect(x * defaultX, y * defaultY, defaultX, defaultY);
     }
 }
