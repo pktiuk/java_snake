@@ -79,6 +79,14 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    public void setApple(Location newApple) {
+        apple = newApple;
+    }
+
+    public void setSnake(Vector<Location> newSnake) {
+        snake = newSnake;
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
