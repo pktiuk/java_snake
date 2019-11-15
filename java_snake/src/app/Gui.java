@@ -14,11 +14,12 @@ import java.util.Vector;
 
 public class Gui {
     ArenaPanel arena;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Gui window=new Gui(40,40);
-                window.arena.
+                Gui window = new Gui(40, 40);
+                window.arena.repaint();
             }
         });
     }
@@ -26,7 +27,7 @@ public class Gui {
     public Gui(int x, int y) {
         JFrame f = new JFrame("JavaSnake");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        arena=new ArenaPanel(x,y);
+        arena = new ArenaPanel(x, y);
         f.add(arena);
         f.pack();
         f.setVisible(true);
@@ -52,15 +53,15 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
 
-    private Location apple;
-    private Vector<Location> snake;
+    private Location apple = new Location(0, 0);
+    private Vector<Location> snake = new Vector<Location>();
 
-    public ArenaPanel(int x, int y)
-    {
-        gridX=x;
-        gridY=y;
+    public ArenaPanel(int x, int y) {
+        gridX = x;
+        gridY = y;
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
+
     public ArenaPanel() {
 
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -73,8 +74,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "snakeModel") {
 
-        }else if(evt.getPropertyName()=="appleLocation")
-        {
+        } else if (evt.getPropertyName() == "appleLocation") {
 
         }
     }
@@ -84,13 +84,23 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, defaultX * gridX, defaultY * gridY);
         drawApple(g);
+        drawSnake(g);
     }
-    protected void drawSnake(Graphics g){
-        Location current,next;
-        while (current!=) {
-            
+
+    protected void drawSnake(Graphics g) {
+        for (int i = 0; i < snake.size() - 1; i++) {
+            g.setColor(snakeColor);
+            if (snake.get(i).x == snake.get(i + 1).x) {
+                g.fillRect(snake.get(i).x * defaultX, Math.min(snake.get(i).y, snake.get(i + 1).y) * defaultY, defaultX,
+                        Math.abs(snake.get(i).y - snake.get(i + 1).y) * defaultY);
+            } else {
+                g.fillRect(Math.min(snake.get(i).x, snake.get(i + 1).x) * defaultX, snake.get(i).y * defaultY,
+                        Math.abs(snake.get(i).x - snake.get(i + 1).x) * defaultX, defaultY);
+            }
+
         }
     }
+
     protected void drawApple(Graphics g) {
         g.setColor(appleColor);
         g.fillRect(apple.x * defaultX, apple.y * defaultY, defaultX, defaultY);
