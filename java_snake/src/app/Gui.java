@@ -10,21 +10,24 @@ import java.awt.Graphics;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Vector;
 
 public class Gui {
-
+    ArenaPanel arena;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                Gui window=new Gui(40,40);
+                window.arena.
             }
         });
     }
 
-    private static void createAndShowGUI() {
+    public Gui(int x, int y) {
         JFrame f = new JFrame("JavaSnake");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new ArenaPanel());
+        arena=new ArenaPanel(x,y);
+        f.add(arena);
         f.pack();
         f.setVisible(true);
     }
@@ -49,6 +52,15 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
 
+    private Location apple;
+    private Vector<Location> snake;
+
+    public ArenaPanel(int x, int y)
+    {
+        gridX=x;
+        gridY=y;
+        setBorder(BorderFactory.createLineBorder(Color.black));
+    }
     public ArenaPanel() {
 
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -61,6 +73,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "snakeModel") {
 
+        }else if(evt.getPropertyName()=="appleLocation")
+        {
+
         }
     }
 
@@ -68,10 +83,16 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, defaultX * gridX, defaultY * gridY);
+        drawApple(g);
     }
-
-    protected void drawApple(Graphics g, int x, int y) {
+    protected void drawSnake(Graphics g){
+        Location current,next;
+        while (current!=) {
+            
+        }
+    }
+    protected void drawApple(Graphics g) {
         g.setColor(appleColor);
-        g.fillRect(x * defaultX, y * defaultY, defaultX, defaultY);
+        g.fillRect(apple.x * defaultX, apple.y * defaultY, defaultX, defaultY);
     }
 }
