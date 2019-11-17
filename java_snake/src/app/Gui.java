@@ -73,7 +73,8 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
 
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "snakeModel") {
-
+            snake = (Vector<Location>) evt.getNewValue();
+            repaint();
         } else if (evt.getPropertyName() == "appleLocation") {
 
         }
@@ -100,10 +101,10 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
             g.setColor(snakeColor);
             if (snake.get(i).x == snake.get(i + 1).x) {
                 g.fillRect(snake.get(i).x * defaultX, Math.min(snake.get(i).y, snake.get(i + 1).y) * defaultY, defaultX,
-                        Math.abs(snake.get(i).y - snake.get(i + 1).y) * defaultY);
+                        Math.abs(snake.get(i).y - snake.get(i + 1).y) * defaultY + defaultY);
             } else {
                 g.fillRect(Math.min(snake.get(i).x, snake.get(i + 1).x) * defaultX, snake.get(i).y * defaultY,
-                        Math.abs(snake.get(i).x - snake.get(i + 1).x) * defaultX, defaultY);
+                        Math.abs(snake.get(i).x - snake.get(i + 1).x) * defaultX + defaultX, defaultY);
             }
 
         }
