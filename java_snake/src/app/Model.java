@@ -46,7 +46,50 @@ public class Model {
         }
     }
 
-
+    public void moveSnake(Direction d) {
+        if (snakeDirection == d)
+            snake.set(0, new Location(snake.get(0).x, snake.get(0).y));
+        else {
+            Location newHead = snake.get(0);
+            switch (d) {
+            case UP:
+                newHead.y -= 1;
+                break;
+            case DOWN:
+                newHead.y += 1;
+                break;
+            case LEFT:
+                newHead.x -= 1;
+                break;
+            case RIGHT:
+                newHead.x += 1;
+                break;
+            }
+            snake.insertElementAt(newHead, 0);
+            snakeDirection=d;
+        }
+        //distance between 2 last components of snake
+        int dist=snake.lastElement().x+snake.lastElement().y-snake.get(snake.size()-2).x-snake.get(snake.size()-2).y;
+        if(Math.abs(dist)==1)
+            snake.remove(snake.size()-1);
+        else
+        {
+            if(snake.lastElement().x<snake.get(snake.size()-2).x)
+            {
+                snake.lastElement().x+=1;
+            }else if(snake.lastElement().x>snake.get(snake.size()-2).x)
+            {
+                snake.lastElement().x-=1;
+            }else if(snake.lastElement().y<snake.get(snake.size()-2).y)
+            {
+                snake.lastElement().y+=1;
+            }else if(snake.lastElement().y>snake.get(snake.size()-2).y)
+            {
+                snake.lastElement().y-=1;
+            }
+        }
+        pcs.firePropertyChange("snakeModel", null, snake);
+    }
 
     public void setTickTime(double newTick) {
         pcs.firePropertyChange("tickTime", tickTime, newTick);
