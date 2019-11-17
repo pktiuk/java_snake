@@ -24,7 +24,7 @@ public class Model implements PropertyChangeListener {
     // Apple position =(x,y)
     int applePosition[] = new int[2];
     // Head-beginning
-    Vector<Location> snake = new Vector<Location>();
+    Vector<Location> snake;
     Direction snakeDirection = Direction.UP;
 
     Location apple;
@@ -138,5 +138,10 @@ public class Model implements PropertyChangeListener {
 
     public Location getSnakeHead() {
         return snake.get(0);
+    }
+
+    public void setSnake(Vector<Location> s) {
+        pcs.firePropertyChange("snakeModel", snake, s);
+        snake = s;
     }
 }
