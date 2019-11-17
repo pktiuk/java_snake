@@ -54,7 +54,8 @@ public class Model implements PropertyChangeListener {
 
     }
 
-    public void moveSnake(Direction d) {
+    // Returns true when snake did not hit wall
+    public boolean moveSnake(Direction d) {
         if (snakeDirection == d)
             snake.set(0, new Location(snake.get(0).x, snake.get(0).y));
         else {
@@ -93,6 +94,11 @@ public class Model implements PropertyChangeListener {
             }
         }
         pcs.firePropertyChange("snakeModel", null, snake);
+        if (wall[snake.get(0).x][snake.get(0).y])
+            return false;
+        else
+            return true;
+
     }
 
     public void setTickTime(double newTick) {
