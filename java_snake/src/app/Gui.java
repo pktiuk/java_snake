@@ -7,7 +7,8 @@ import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -31,6 +32,7 @@ public class Gui {
         f.add(arena);
         f.pack();
         f.setVisible(true);
+        f.addKeyListener(arena.buttonsListener);
     }
 }
 
@@ -52,6 +54,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Color snakeColor = Color.GREEN;
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
+    public KeyWatch buttonsListener=new KeyWatch();
 
     private Location apple = new Location(0, 0);
     private Vector<Location> snake = new Vector<Location>();
@@ -114,4 +117,26 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         g.setColor(appleColor);
         g.fillRect(apple.x * defaultX, apple.y * defaultY, defaultX, defaultY);
     }
+
+    class KeyWatch implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {}
+        @Override
+        public void keyReleased(KeyEvent e) {}
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case 32: //SPACE
+                      
+                    break;
+                default:
+
+                    break;
+            }
+        }
+    }
+    
+
 }
