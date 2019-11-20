@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Vector;
 
 public class Gui {
@@ -54,10 +55,12 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Color snakeColor = Color.GREEN;
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
-    public KeyWatch buttonsListener=new KeyWatch();
+    public KeyWatch buttonsListener = new KeyWatch();
 
     private Location apple = new Location(0, 0);
     private Vector<Location> snake = new Vector<Location>();
+    private int lastButton = 0;
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public ArenaPanel(int x, int y) {
         gridX = x;
@@ -121,22 +124,38 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     class KeyWatch implements KeyListener {
 
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
+
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case 32: //SPACE
-                      
+            if (lastButton != e.getKeyCode()) {
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    pcs.firePropertyChange("pauseButton", false, true);
+                    break;
+                case KeyEvent.VK_UP:
+                    pcs.firePropertyChange("directionChanged", null, Direction.UP);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    pcs.firePropertyChange("directionChanged", null, Direction.DOWN);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    pcs.firePropertyChange("directionChanged", null, Direction.LEFT);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    pcs.firePropertyChange("directionChanged", null, Direction.RIGHT);
                     break;
                 default:
-
                     break;
+                }
+                lastButton = e.getKeyCode();
             }
         }
     }
-    
 
 }
