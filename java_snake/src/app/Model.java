@@ -55,7 +55,7 @@ public class Model implements PropertyChangeListener {
     }
 
     // Returns true when snake did not hit wall
-    public boolean moveSnake(Direction d) {
+    public boolean moveSnakeSucceeded(Direction d) {
         if (snakeDirection == d)
             snake.set(0, new Location(snake.get(0).x, snake.get(0).y));
         else {
@@ -77,20 +77,24 @@ public class Model implements PropertyChangeListener {
             snake.insertElementAt(newHead, 0);
             snakeDirection = d;
         }
-        // distance between 2 last components of snake
-        int dist = snake.lastElement().x + snake.lastElement().y - snake.get(snake.size() - 2).x
-                - snake.get(snake.size() - 2).y;
-        if (Math.abs(dist) == 1)
-            snake.remove(snake.size() - 1);
-        else {
-            if (snake.lastElement().x < snake.get(snake.size() - 2).x) {
-                snake.lastElement().x += 1;
-            } else if (snake.lastElement().x > snake.get(snake.size() - 2).x) {
-                snake.lastElement().x -= 1;
-            } else if (snake.lastElement().y < snake.get(snake.size() - 2).y) {
-                snake.lastElement().y += 1;
-            } else if (snake.lastElement().y > snake.get(snake.size() - 2).y) {
-                snake.lastElement().y -= 1;
+        if (snake.firstElement().equal(apple)) {
+            pcs.firePropertyChange("apple eaten", null, apple);
+        } else {
+            // distance between 2 last components of snake
+            int dist = snake.lastElement().x + snake.lastElement().y - snake.get(snake.size() - 2).x
+                    - snake.get(snake.size() - 2).y;
+            if (Math.abs(dist) == 1)
+                snake.remove(snake.size() - 1);
+            else {
+                if (snake.lastElement().x < snake.get(snake.size() - 2).x) {
+                    snake.lastElement().x += 1;
+                } else if (snake.lastElement().x > snake.get(snake.size() - 2).x) {
+                    snake.lastElement().x -= 1;
+                } else if (snake.lastElement().y < snake.get(snake.size() - 2).y) {
+                    snake.lastElement().y += 1;
+                } else if (snake.lastElement().y > snake.get(snake.size() - 2).y) {
+                    snake.lastElement().y -= 1;
+                }
             }
         }
         pcs.firePropertyChange("snakeModel", null, snake);
