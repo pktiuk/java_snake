@@ -15,7 +15,8 @@ public class Controller implements PropertyChangeListener {
     Model m;
     Gui g;
     Direction d = Direction.UP;
-    Timer t = new Timer();
+    Timer timer = new Timer();
+    boolean isTimerOn = true;
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
@@ -36,7 +37,7 @@ public class Controller implements PropertyChangeListener {
         l.add(new Location(x / 2, y / 2));
         l.add(new Location(1 + x / 2, y / 2));
         m.setSnake(l);
-        t.scheduleAtFixedRate(new TimerTask() {
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 doClockTick();
@@ -51,14 +52,29 @@ public class Controller implements PropertyChangeListener {
 
         } else {
             pcs.firePropertyChange("gameLost", null, true);
-            t.cancel();
+            timer.cancel();
         }
 
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
+        if (evt.getPropertyName() == "directionChanged") {
+            d = (Direction) evt.getNewValue();
+        } else if (evt.getPropertyName() == "pauseButton") {
+            if (isTimerOn) {
+                timer.cancel();
+                isTimerOn = false;
+            } else {
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        doClockTick();
+                    }
+                }, (long) m.getTickTime() * 1000, (long) m.getTickTime() * 1000);
+                isTimerOn = true;
+            }
+        }
 
     }
 
