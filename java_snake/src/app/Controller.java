@@ -17,6 +17,7 @@ public class Controller implements PropertyChangeListener {
     Model m;
     Gui g;
     Direction d = Direction.UP;
+    Direction lastMoved = Direction.UP;
     Timer timer;
     boolean isTimerOn = true;
 
@@ -38,11 +39,12 @@ public class Controller implements PropertyChangeListener {
         g.arena.addPropertyChangeListener(this);
         Vector<Location> l = new Vector<Location>();
         l.add(new Location(x / 2, y / 2));
-        l.add(new Location(2 + x / 2, y / 2));
+        l.add(new Location(x / 2, y / 2 + 3));
         m.setSnake(l);
         timer = new Timer(1000, taskPerformer);
         timer.start();
         m.moveSnakeSucceeded(d);
+        m.setApple(new Location(3, 3));
     }
 
     ActionListener taskPerformer = new ActionListener() {
@@ -52,7 +54,7 @@ public class Controller implements PropertyChangeListener {
     };
 
     void doClockTick() {
-        System.out.println("Tick Succeded");
+        lastMoved = d;
         if (!m.moveSnakeSucceeded(d)) {
             pcs.firePropertyChange("gameLost", null, true);
             timer.stop();
@@ -63,8 +65,11 @@ public class Controller implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "directionChanged") {
-            d = (Direction) evt.getNewValue();
-            System.out.println("ButtonCon");
+            if (!((lastMoved == Direction.UP && (Direction) evt.getNewValue() == Direction.DOWN)
+                    || (lastMoved == Direction.DOWN && (Direction) evt.getNewValue() == Direction.UP)
+                    || (lastMoved == Direction.RIGHT && (Direction) evt.getNewValue() == Direction.LEFT)
+                    || (lastMoved == Direction.LEFT && (Direction) evt.getNewValue() == Direction.RIGHT)))
+                d = (Direction) evt.getNewValue();
         } else if (evt.getPropertyName() == "pauseButton") {
             if (isTimerOn) {
 
