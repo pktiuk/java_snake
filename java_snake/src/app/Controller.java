@@ -38,19 +38,26 @@ public class Controller implements PropertyChangeListener {
         g.arena.addPropertyChangeListener(this);
         Vector<Location> l = new Vector<Location>();
         l.add(new Location(x / 2, y / 2));
-        l.add(new Location(1 + x / 2, y / 2));
+        l.add(new Location(2 + x / 2, y / 2));
         m.setSnake(l);
         timer = new Timer(1000, taskPerformer);
         timer.start();
+        m.moveSnakeSucceeded(d);
     }
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            // doClockTick();
+            doClockTick();
         }
     };
 
     void doClockTick() {
+        System.out.println("Tick Succeded");
+        if (!m.moveSnakeSucceeded(d)) {
+            pcs.firePropertyChange("gameLost", null, true);
+            timer.stop();
+            System.out.println("Lost");
+        }
     }
 
     @Override
