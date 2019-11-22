@@ -1,11 +1,13 @@
 package app;
 
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import javax.swing.Timer;
 
 /**
  * Controller
@@ -15,7 +17,7 @@ public class Controller implements PropertyChangeListener {
     Model m;
     Gui g;
     Direction d = Direction.UP;
-    Timer timer = new Timer();
+    Timer timer;
     boolean isTimerOn = true;
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -30,6 +32,7 @@ public class Controller implements PropertyChangeListener {
         m = new Model(x, y);// Najlepiej w mainie()
         g = new Gui(x, y);
         m.addPropertyChangeListener(g.arena);
+        m.addPropertyChangeListener(this);
         addPropertyChangeListener(g.arena);
         addPropertyChangeListener(m);
         g.arena.addPropertyChangeListener(this);
@@ -37,41 +40,30 @@ public class Controller implements PropertyChangeListener {
         l.add(new Location(x / 2, y / 2));
         l.add(new Location(1 + x / 2, y / 2));
         m.setSnake(l);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                doClockTick();
-            }
-        }, (long) m.getTickTime() * 1000, (long) m.getTickTime() * 1000);
+        timer = new Timer(1000, taskPerformer);
+        timer.start();
     }
 
-    void doClockTick() {
-
-        if (m.moveSnakeSucceeded(d)) {
-            // if (m.getApple().equal(m.getSnakeHead())
-
-        } else {
-            pcs.firePropertyChange("gameLost", null, true);
-            timer.cancel();
+    ActionListener taskPerformer = new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            // doClockTick();
         }
+    };
 
+    void doClockTick() {
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "directionChanged") {
             d = (Direction) evt.getNewValue();
+            System.out.println("ButtonCon");
         } else if (evt.getPropertyName() == "pauseButton") {
             if (isTimerOn) {
-                timer.cancel();
+
                 isTimerOn = false;
             } else {
-                timer.scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        doClockTick();
-                    }
-                }, (long) m.getTickTime() * 1000, (long) m.getTickTime() * 1000);
+                timer.start();
                 isTimerOn = true;
             }
         }
