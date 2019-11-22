@@ -44,44 +44,52 @@ public class Model implements PropertyChangeListener {
         for (int i = 0; i < gridX; i++) {
             wall[i] = new boolean[gridY];
         }
+        setApple(new Location(3, 3));
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO Auto-generated method stub
-
     }
 
     // Returns true when snake did not hit wall
     public boolean moveSnakeSucceeded(Direction d) {
-        if (snakeDirection == d)
-            snake.set(0, new Location(snake.get(0).x, snake.get(0).y));
-        else {
-            Location newHead = snake.get(0);
-            switch (d) {
-            case UP:
-                newHead.y -= 1;
-                break;
-            case DOWN:
-                newHead.y += 1;
-                break;
-            case LEFT:
-                newHead.x -= 1;
-                break;
-            case RIGHT:
-                newHead.x += 1;
-                break;
-            }
-            snake.insertElementAt(newHead, 0);
-            snakeDirection = d;
+        int headX = snake.get(0).x;
+        int headY = snake.get(0).y;
+        switch (d) {
+        case UP:
+            headY -= 1;
+            break;
+        case DOWN:
+            headY += 1;
+            break;
+        case LEFT:
+            headX -= 1;
+            break;
+        case RIGHT:
+            headX += 1;
+            break;
         }
+        if (snakeDirection == d) {
+            snake.set(0, new Location(headX, headY));
+        } else {
+            snake.insertElementAt(new Location(headX, headY), 0);
+        }
+
+        snakeDirection = d;
         if (snake.firstElement().equal(apple)) {
             pcs.firePropertyChange("apple eaten", null, apple);
         } else {
             // distance between 2 last components of snake
-            int dist = snake.lastElement().x + snake.lastElement().y - snake.get(snake.size() - 2).x
-                    - snake.get(snake.size() - 2).y;
-            if (Math.abs(dist) == 1)
+            int dist = 0;
+            boolean enoughLong = false;
+            if (snake.size() > 2) {
+                dist = snake.lastElement().x + snake.lastElement().y - snake.get(snake.size() - 2).x
+                        - snake.get(snake.size() - 2).y;
+                enoughLong = true;
+            }
+
+            if (Math.abs(dist) == 1 && enoughLong)
                 snake.remove(snake.size() - 1);
             else {
                 if (snake.lastElement().x < snake.get(snake.size() - 2).x) {
