@@ -61,6 +61,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Vector<Location> snake = new Vector<Location>();
     private int lastButton = 0;
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private Direction lastDirection = Direction.UP;
 
     public ArenaPanel(int x, int y) {
         gridX = x;
@@ -139,16 +140,28 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
                     pcs.firePropertyChange("pauseButton", false, true);
                     break;
                 case KeyEvent.VK_UP:
-                    pcs.firePropertyChange("directionChanged", null, Direction.UP);
+                    if (lastDirection != Direction.DOWN) {
+                        pcs.firePropertyChange("directionChanged", null, Direction.UP);
+                        lastDirection = Direction.UP;
+                    }
                     break;
                 case KeyEvent.VK_DOWN:
-                    pcs.firePropertyChange("directionChanged", null, Direction.DOWN);
+                    if (lastDirection != Direction.UP) {
+                        pcs.firePropertyChange("directionChanged", null, Direction.DOWN);
+                        lastDirection = Direction.DOWN;
+                    }
                     break;
                 case KeyEvent.VK_LEFT:
-                    pcs.firePropertyChange("directionChanged", null, Direction.LEFT);
+                    if (lastDirection != Direction.RIGHT) {
+                        pcs.firePropertyChange("directionChanged", null, Direction.LEFT);
+                        lastDirection = Direction.LEFT;
+                    }
                     break;
                 case KeyEvent.VK_RIGHT:
-                    pcs.firePropertyChange("directionChanged", null, Direction.RIGHT);
+                    if (lastDirection != Direction.LEFT) {
+                        pcs.firePropertyChange("directionChanged", null, Direction.RIGHT);
+                        lastDirection = Direction.RIGHT;
+                    }
                     break;
                 default:
                     break;
