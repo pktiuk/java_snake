@@ -21,8 +21,6 @@ public class Model implements PropertyChangeListener {
     boolean wall[][];
 
     double tickTime = 0.7;
-    // Apple position =(x,y)
-    int applePosition[] = new int[2];
     // Head-beginning
     Vector<Location> snake;
     Direction snakeDirection = Direction.UP;
