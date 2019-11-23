@@ -104,7 +104,7 @@ public class Model implements PropertyChangeListener {
             }
         }
         pcs.firePropertyChange("snakeModel", null, snake);
-        if (wall[snake.get(0).x][snake.get(0).y])
+        if (getFilledTiles()[snake.firstElement().x][snake.firstElement().y])
             return false;
         else
             return true;
@@ -132,7 +132,7 @@ public class Model implements PropertyChangeListener {
     public boolean[][] getFilledTiles() {
         boolean filledTiles[][] = wall.clone();
         int a, begin, end;
-        for (int i = 0; i < snake.size() - 1; i++) {
+        for (int i = 1; i < snake.size() - 1; i++) {
             if (snake.get(i).x == snake.get(i + 1).x) {
                 a = snake.get(i).x;
                 begin = Math.min(snake.get(i).y, snake.get(i + 1).y);
@@ -149,6 +149,7 @@ public class Model implements PropertyChangeListener {
                 }
             }
         }
+
         return filledTiles;
     }
 
