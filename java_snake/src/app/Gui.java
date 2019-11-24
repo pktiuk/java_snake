@@ -59,6 +59,8 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
 
     private Location apple = new Location(0, 0);
     private Vector<Location> snake = new Vector<Location>();
+    private boolean[][] wall;
+
     private int lastButton = 0;
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private Direction lastDirection = Direction.UP;
@@ -85,6 +87,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         } else if (evt.getPropertyName() == "appleLocation") {
             apple = (Location) evt.getNewValue();
             repaint();
+        } else if (evt.getPropertyName() == "wall") {
+            wall = (boolean[][]) evt.getNewValue();
+            repaint();
         }
     }
 
@@ -100,6 +105,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, defaultX * gridX, defaultY * gridY);
+        drawWalls(g);
         drawApple(g);
         drawSnake(g);
     }
@@ -121,6 +127,17 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     protected void drawApple(Graphics g) {
         g.setColor(appleColor);
         g.fillRect(apple.x * defaultX, apple.y * defaultY, defaultX, defaultY);
+    }
+
+    protected void drawWalls(Graphics g) {
+        for (int i = 0; i < gridX; i++) {
+            for (int j = 0; j < gridY; j++) {
+                if (wall[i][j]) {
+                    g.setColor(wallColor);
+                    g.fillRect(i * defaultX, j * defaultY, defaultX, defaultY);
+                }
+            }
+        }
     }
 
     class KeyWatch implements KeyListener {
@@ -167,4 +184,13 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
+
 }
+
+    
+
+    
+
+    
+
+    
