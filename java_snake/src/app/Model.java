@@ -31,6 +31,8 @@ public class Model implements PropertyChangeListener {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
+        pcs.firePropertyChange("wall", null, wall);
+
     }
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
@@ -45,6 +47,7 @@ public class Model implements PropertyChangeListener {
             wall[i] = new boolean[gridY];
         }
         setApple(new Location(3, 3));
+        setDefaultWalls();
     }
 
     @Override
@@ -130,7 +133,10 @@ public class Model implements PropertyChangeListener {
     }
 
     public boolean[][] getFilledTiles() {
-        boolean filledTiles[][] = wall.clone();
+        boolean filledTiles[][] = new boolean[gridX][];
+        for (int i = 0; i < gridY; i++) {
+            filledTiles[i] = wall[i].clone();
+        }
         int a, begin, end;
         for (int i = 1; i < snake.size() - 1; i++) {
             if (snake.get(i).x == snake.get(i + 1).x) {
@@ -138,19 +144,31 @@ public class Model implements PropertyChangeListener {
                 begin = Math.min(snake.get(i).y, snake.get(i + 1).y);
                 end = Math.max(snake.get(i).y, snake.get(i + 1).y);
                 for (; begin <= end; begin++) {
-                    wall[a][begin] = true;
+                    filledTiles[a][begin] = true;
                 }
             } else {
                 a = snake.get(i).y;
                 begin = Math.min(snake.get(i).x, snake.get(i + 1).x);
                 end = Math.max(snake.get(i).x, snake.get(i + 1).x);
                 for (; begin <= end; begin++) {
-                    wall[begin][a] = true;
+                    filledTiles[begin][a] = true;
                 }
             }
         }
 
         return filledTiles;
+    }
+
+    void setDefaultWalls() {
+        for (int i = 0; i < gridX; i++) {
+            wall[i][0] = true;
+            wall[i][gridY - 1] = true;
+        }
+        for (int i = 1; i < gridY - 1; i++) {
+            wall[0][i] = true;
+            wall[gridX - 1][i] = true;
+        }
+        pcs.firePropertyChange("wall", null, wall);
     }
 
     public Location getSnakeHead() {
