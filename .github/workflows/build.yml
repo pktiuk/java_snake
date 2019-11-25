@@ -10,4 +10,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build java
-      run: javac src/app/App.java src/app/Controller.java  src/app/Location.java src/app/Model.java src/app/Gui.java 
+      run: javac java_snake/src/app/App.java java_snake/src/app/Controller.java  java_snake/src/app/Location.java java_snake/src/app/Model.java java_snake/src/app/Gui.java 
