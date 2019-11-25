@@ -1,0 +1,13 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build java
+      run: javac src/app/App.java src/app/Controller.java  src/app/Location.java src/app/Model.java src/app/Gui.java 
