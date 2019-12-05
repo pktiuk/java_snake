@@ -20,7 +20,7 @@ public class Model implements PropertyChangeListener {
     // true is wall, false no wall
     boolean wall[][];
 
-    double tickTime = 0.7;
+    int tickTime = 500;
     // Head-beginning
     Vector<Location> snake;
     Direction snakeDirection = Direction.UP;
@@ -114,7 +114,7 @@ public class Model implements PropertyChangeListener {
 
     }
 
-    public void setTickTime(double newTick) {
+    public void setTickTime(int newTick) {
         pcs.firePropertyChange("tickTime", tickTime, newTick);
         tickTime = newTick;
     }

@@ -42,7 +42,7 @@ public class Controller implements PropertyChangeListener {
         l.add(new Location(x / 2, y / 2));
         l.add(new Location(x / 2, y / 2 + 3));
         m.setSnake(l);
-        timer = new Timer(1000, taskPerformer);
+        timer = new Timer(m.tickTime, taskPerformer);
         timer.start();
         m.moveSnakeSucceeded(d);
         m.setApple(new Location(3, 3));
