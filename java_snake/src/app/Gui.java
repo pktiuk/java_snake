@@ -53,6 +53,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private int gridX = 40;
     private int gridY = 40;
     private Color snakeColor = Color.GREEN;
+    private Color snakeBackColor = Color.BLUE;
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
     public KeyWatch buttonsListener = new KeyWatch();
@@ -111,14 +112,28 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     }
 
     protected void drawSnake(Graphics g) {
+        g.setColor(snakeColor);
         for (int i = 0; i < snake.size() - 1; i++) {
-            g.setColor(snakeColor);
             if (snake.get(i).x == snake.get(i + 1).x) {
                 g.fillRect(snake.get(i).x * defaultX, Math.min(snake.get(i).y, snake.get(i + 1).y) * defaultY, defaultX,
                         Math.abs(snake.get(i).y - snake.get(i + 1).y) * defaultY + defaultY);
+
             } else {
                 g.fillRect(Math.min(snake.get(i).x, snake.get(i + 1).x) * defaultX, snake.get(i).y * defaultY,
                         Math.abs(snake.get(i).x - snake.get(i + 1).x) * defaultX + defaultX, defaultY);
+            }
+
+        }
+        for (int i = 0; i < snake.size() - 1; i++) {
+            g.setColor(snakeBackColor);
+            if (snake.get(i).x == snake.get(i + 1).x) {
+                g.fillRect(snake.get(i).x * defaultX + defaultX / 2 - 1,
+                        Math.min(snake.get(i).y, snake.get(i + 1).y) * defaultY + defaultY / 2, 3,
+                        Math.abs(snake.get(i).y - snake.get(i + 1).y) * defaultY + 3);
+            } else {
+                g.fillRect(Math.min(snake.get(i).x, snake.get(i + 1).x) * defaultX + defaultX / 2 - 1,
+                        snake.get(i).y * defaultY + defaultY / 2,
+                        Math.abs(snake.get(i).x - snake.get(i + 1).x) * defaultX + 3, 3);
             }
 
         }
@@ -186,11 +201,3 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     }
 
 }
-
-    
-
-    
-
-    
-
-    
