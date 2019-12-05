@@ -1,6 +1,6 @@
 ## Simple smake-like game written in java.
 
-[![Build Status](https://github.com/pktiuk/java-snake/workflows/CI/badge.svg)](https://github.com/pktiuk/java-snake/workflows/CI/badge.svg)
+![BUILD](https://github.com/pktiuk/java_snake/workflows/CI/badge.svg)
 
 It is based on Model–View–Controller pattern.
 
