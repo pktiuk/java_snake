@@ -9,7 +9,8 @@ import java.util.Vector;
 import javax.swing.Timer;
 
 /**
- * Controller
+ * Controller - main class in MVC model it contains logic of game, decides when
+ * it is lost and it contains timer controling speed of game
  */
 public class Controller implements PropertyChangeListener {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -28,9 +29,9 @@ public class Controller implements PropertyChangeListener {
         this.pcs.removePropertyChangeListener(listener);
     }
 
-    public Controller(int x, int y) {
-        m = new Model(x, y);// Najlepiej w mainie()
-        g = new Gui(x, y);
+    public Controller(int x, int y, Model model, Gui gui) {
+        m = model;
+        g = gui;
         m.addPropertyChangeListener(g.arena);
         m.addPropertyChangeListener(this);
         addPropertyChangeListener(g.arena);
