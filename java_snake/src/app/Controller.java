@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Random;
 import java.util.TimerTask;
 import java.util.Vector;
 import javax.swing.Timer;
@@ -78,6 +79,15 @@ public class Controller implements PropertyChangeListener {
                 timer.start();
                 isTimerOn = true;
             }
+        } else if (evt.getPropertyName() == "apple eaten") {
+            boolean filled[][] = m.getFilledTiles();
+            int x, y;
+            Random rand = new Random();
+            do {
+                x = rand.nextInt(filled.length);
+                y = rand.nextInt(filled[0].length);
+            } while (filled[x][y]);
+            m.setApple(new Location(x, y));
         }
 
     }
