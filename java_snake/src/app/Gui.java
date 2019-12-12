@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,6 +15,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Vector;
 
+
+/**
+ * <code>Gui</code> - GUI visualizing snake, arena, and apples
+ * shows state of game and reads pressed keys.
+ */
 public class Gui {
     ArenaPanel arena;
 
@@ -43,9 +49,6 @@ public class Gui {
  */
 class ArenaPanel extends JPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     private int defaultX = 15; // default size of box
@@ -64,7 +67,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
 
     private int lastButton = 0;
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private Direction lastDirection = Direction.UP;
+    private boolean gameLost=false;
 
     public ArenaPanel(int x, int y) {
         gridX = x;
@@ -91,6 +94,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         } else if (evt.getPropertyName() == "wall") {
             wall = (boolean[][]) evt.getNewValue();
             repaint();
+        }else if (evt.getPropertyName() == "gameLost") {
+            gameLost=true;
+            repaint();
         }
     }
 
@@ -109,6 +115,11 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         drawWalls(g);
         drawApple(g);
         drawSnake(g);
+        if(gameLost)
+        {
+            gameLost=false;
+            drawLost(g);
+        }
     }
 
     protected void drawSnake(Graphics g) {
@@ -153,6 +164,14 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
                 }
             }
         }
+    }
+
+    protected void drawLost(Graphics g)
+    {
+        g.setColor(Color.WHITE);
+        Font  f1  = new Font(Font.SERIF, Font.BOLD,  20);
+        g.setFont(f1);
+        g.drawString("LOST", defaultX*gridX/2 - 20, defaultY*3);
     }
 
     class KeyWatch implements KeyListener {
