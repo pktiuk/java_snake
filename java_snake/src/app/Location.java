@@ -1,7 +1,7 @@
 package app;
 
 /**
- * Location
+ * <code>Location</code> - simple class describing location in 2-dimensional space.
  */
 public class Location {
 
@@ -12,7 +12,10 @@ public class Location {
         x = X;
         y = Y;
     }
-
+/**
+ * Compares two Locations and returns <code>true<code/> when they describe the same place
+ * @return boolean
+ */
     public boolean equal(Location loc2) {
         if (x == loc2.x && y == loc2.y)
             return true;

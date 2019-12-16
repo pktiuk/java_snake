@@ -28,7 +28,13 @@ public class Controller implements PropertyChangeListener {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
-
+/**
+ * Constructor for <code>Controller<code/> it creates it and connects all of these components together using PropertyChangeListeners
+ * @param x - width of arena
+ * @param y - height of arena
+ * @param model -reference to model
+ * @param gui - reference to GUI
+ */
     public Controller(int x, int y, Model model, Gui gui) {
         m = model;
         g = gui;

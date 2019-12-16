@@ -31,7 +31,11 @@ public class Gui {
             }
         });
     }
-
+/**
+ * Basic constructor for <code>Gui<code/>
+ * @param x - number of tiles horizontally
+ * @param y - number of tiles vertically
+ */
     public Gui(int x, int y) {
         JFrame f = new JFrame("JavaSnake");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +55,7 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
 
     private static final long serialVersionUID = 1L;
 
-    private int defaultX = 15; // default size of box
+    private int defaultX = 15;
     private int defaultY = 15;
     private int gridX = 40;
     private int gridY = 40;
@@ -59,6 +63,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private Color snakeBackColor = Color.BLUE;
     private Color appleColor = Color.RED;
     private Color wallColor = Color.WHITE;
+    /**
+     * Listens to pressed buttons and reacts on them firing property changes
+     */
     public KeyWatch buttonsListener = new KeyWatch();
 
     private Location apple = new Location(0, 0);
@@ -69,6 +76,11 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean gameLost=false;
 
+    /**
+     * Basic constructor for <code>ArenaPanel<code/>
+     * @param x - how many tiles in horizontal axis create arena
+     * @param y - how many tiles in vertical axis create arena
+     */
     public ArenaPanel(int x, int y) {
         gridX = x;
         gridY = y;

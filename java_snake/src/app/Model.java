@@ -39,6 +39,11 @@ public class Model implements PropertyChangeListener {
         this.pcs.removePropertyChangeListener(listener);
     }
 
+    /**
+     * Constructor for Model
+     * @param x - width of arena
+     * @param y - height of arena
+     */
     public Model(int x, int y) {
         gridX = x;
         gridY = y;
@@ -55,7 +60,9 @@ public class Model implements PropertyChangeListener {
         // TODO Auto-generated method stub
     }
 
-    // Returns true when snake did not hit wall
+    /**
+     * Returns <code>true<code/> when snake did not hit wall
+     */
     public boolean moveSnakeSucceeded(Direction d) {
         int headX = snake.get(0).x;
         int headY = snake.get(0).y;
@@ -158,7 +165,9 @@ public class Model implements PropertyChangeListener {
 
         return filledTiles;
     }
-
+/**
+ * Generates default set of walls around arena
+ */
     void setDefaultWalls() {
         for (int i = 0; i < gridX; i++) {
             wall[i][0] = true;
