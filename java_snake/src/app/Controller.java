@@ -28,13 +28,16 @@ public class Controller implements PropertyChangeListener {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
-/**
- * Constructor for <code>Controller<code/> it creates it and connects all of these components together using PropertyChangeListeners
- * @param x - width of arena
- * @param y - height of arena
- * @param model -reference to model
- * @param gui - reference to GUI
- */
+
+    /**
+     * Constructor for <code>Controller<code/> it creates it and connects all of
+     * these components together using PropertyChangeListeners
+     * 
+     * @param x     - width of arena
+     * @param y     - height of arena
+     * @param model -reference to model
+     * @param gui   - reference to GUI
+     */
     public Controller(int x, int y, Model model, Gui gui) {
         m = model;
         g = gui;
@@ -70,6 +73,7 @@ public class Controller implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("PropertyChanged");
         if (evt.getPropertyName() == "directionChanged") {
             if (!((lastMoved == Direction.UP && (Direction) evt.getNewValue() == Direction.DOWN)
                     || (lastMoved == Direction.DOWN && (Direction) evt.getNewValue() == Direction.UP)
@@ -78,7 +82,7 @@ public class Controller implements PropertyChangeListener {
                 d = (Direction) evt.getNewValue();
         } else if (evt.getPropertyName() == "pauseButton") {
             if (isTimerOn) {
-
+                timer.stop();
                 isTimerOn = false;
             } else {
                 timer.start();

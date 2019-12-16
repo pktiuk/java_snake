@@ -41,6 +41,7 @@ public class Model implements PropertyChangeListener {
 
     /**
      * Constructor for Model
+     * 
      * @param x - width of arena
      * @param y - height of arena
      */
@@ -165,9 +166,10 @@ public class Model implements PropertyChangeListener {
 
         return filledTiles;
     }
-/**
- * Generates default set of walls around arena
- */
+
+    /**
+     * Generates default set of walls around arena
+     */
     void setDefaultWalls() {
         for (int i = 0; i < gridX; i++) {
             wall[i][0] = true;
