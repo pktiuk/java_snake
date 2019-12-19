@@ -92,11 +92,6 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public ArenaPanel() {
-
-        setBorder(BorderFactory.createLineBorder(Color.black));
-    }
-    
     /**
     * returns Dimension describing preffered size of module
     */
