@@ -5,6 +5,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Vector;
 
+
+/**
+ * Enums describing Direction
+ */
 enum Direction {
     LEFT, RIGHT, UP, DOWN
 }
@@ -29,12 +33,20 @@ public class Model implements PropertyChangeListener {
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    /**
+     * Add new PropertyChangeListener to list of used ones
+     * @param listener
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
         pcs.firePropertyChange("wall", null, wall);
 
     }
 
+    /**
+     * Remove selected PropertyChangeListener form list of listeners
+     * @param listener - which PropertyChangeListener should be removed
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
@@ -56,13 +68,14 @@ public class Model implements PropertyChangeListener {
         setDefaultWalls();
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
-    }
+    /**
+     * Reaction to events implemented using PropertyChangeEvent
+     */
+    public void propertyChange(PropertyChangeEvent evt) {}
 
     /**
-     * Returns <code>true<code/> when snake did not hit wall
+     * Returns <code>true<code/> when snake did not hit wall after moving in passed direcrion
+     * @param d - direction of movement
      */
     public boolean moveSnakeSucceeded(Direction d) {
         int headX = snake.get(0).x;
@@ -122,24 +135,42 @@ public class Model implements PropertyChangeListener {
 
     }
 
+    /**
+     * Change value of tickTime and fires event sonnected with it 
+     * @param newTick - time of tick in milliseconds
+     */
     public void setTickTime(int newTick) {
         pcs.firePropertyChange("tickTime", tickTime, newTick);
         tickTime = newTick;
     }
 
+    /**
+     * Set new location for apple
+     * @param newApple - new Location of Apple
+     */
     public void setApple(Location newApple) {
         pcs.firePropertyChange("appleLocation", apple, newApple);
         apple = newApple;
     }
 
+    /**
+     * Returns location of apple
+     */
     public Location getApple() {
         return apple;
     }
 
+    /**
+     * Returns time of tick
+     */
     public double getTickTime() {
         return tickTime;
     }
 
+    /**
+     * Returns array of filled tiles size of arrays reflects size of arena boolean[x][y]
+     * @return array of booleans describing filled tiles using <code>true<code/> value and empty by <code>flase<code/> 
+     */
     public boolean[][] getFilledTiles() {
         boolean filledTiles[][] = new boolean[gridX][];
         for (int i = 0; i < gridY; i++) {
@@ -182,10 +213,17 @@ public class Model implements PropertyChangeListener {
         pcs.firePropertyChange("wall", null, wall);
     }
 
+    /**
+     * Returns location of snake's head
+     */
     public Location getSnakeHead() {
         return snake.get(0);
     }
 
+    /**
+     * Changes model of sanke stored in Model
+     * @param s - new snake model described by vector of Locations
+     */
     public void setSnake(Vector<Location> s) {
         pcs.firePropertyChange("snakeModel", snake, s);
         snake = s;

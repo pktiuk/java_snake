@@ -21,10 +21,18 @@ public class Controller implements PropertyChangeListener {
     Timer timer;
     boolean isTimerOn = true;
 
+    /**
+     * Add new PropertyChangeListener to list of used ones
+     * @param listener
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Remove selected PropertyChangeListener form list of listeners
+     * @param listener - which PropertyChangeListener should be removed
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
@@ -62,6 +70,9 @@ public class Controller implements PropertyChangeListener {
         }
     };
 
+    /**
+     * Main function which check status of game after every clock tick
+     */
     void doClockTick() {
         lastMoved = d;
         if (!m.moveSnakeSucceeded(d)) {
@@ -71,6 +82,9 @@ public class Controller implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Reaction to events implemented using PropertyChangeEvent
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("PropertyChanged");

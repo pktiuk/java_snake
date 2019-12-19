@@ -22,6 +22,9 @@ import java.util.Vector;
 public class Gui {
     ArenaPanel arena;
 
+    /**
+     * main function for Gui -used for testing
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -93,11 +96,17 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
 
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
-
+    
+    /**
+    * returns Dimension describing preffered size of module
+    */
     public Dimension getPreferredSize() {
         return new Dimension(defaultX * gridX, defaultY * gridY);
     }
-
+    
+    /**
+     * Reaction to events implemented using PropertyChangeEvent
+     */
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName() == "snakeModel") {
             snake = (Vector<Location>) evt.getNewValue();
@@ -114,14 +123,25 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets new Location apple
+     * @param newApple
+     */
     public void setApple(Location newApple) {
         apple = newApple;
     }
 
+    /**
+     * Sets new snake
+     * @param newSnake - vector describing snake location
+     */
     public void setSnake(Vector<Location> newSnake) {
         snake = newSnake;
     }
 
+    /**
+     * default function used for draving arena with all of the elements - contains functions for drawing every component of arena
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
@@ -135,6 +155,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * drawing snake on arena
+     */
     protected void drawSnake(Graphics g) {
         g.setColor(snakeColor);
         for (int i = 0; i < snake.size() - 1; i++) {
@@ -163,11 +186,17 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * draw apple on arena
+     */
     protected void drawApple(Graphics g) {
         g.setColor(appleColor);
         g.fillRect(apple.x * defaultX, apple.y * defaultY, defaultX, defaultY);
     }
 
+    /**
+     * draw walls on arena
+     */
     protected void drawWalls(Graphics g) {
         for (int i = 0; i < gridX; i++) {
             for (int j = 0; j < gridY; j++) {
@@ -179,6 +208,9 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * draw information about lost game on arena
+     */
     protected void drawLost(Graphics g) {
         g.setColor(Color.WHITE);
         Font f1 = new Font(Font.SERIF, Font.BOLD, 20);
@@ -186,6 +218,10 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         g.drawString("LOST", defaultX * gridX / 2 - 20, defaultY * 3);
     }
 
+    /**
+     * KeyWatch - implements support of keyboard controll
+     * Dependly on pressed button it can fire event
+     */
     class KeyWatch implements KeyListener {
 
         @Override
@@ -223,10 +259,16 @@ class ArenaPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Adds new PropertyChangeListener 
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }
 
+    /**
+     * removes PropertyChangeListener
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
