@@ -23,6 +23,7 @@ public class Controller implements PropertyChangeListener {
 
     /**
      * Add new PropertyChangeListener to list of used ones
+     * 
      * @param listener
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -31,6 +32,7 @@ public class Controller implements PropertyChangeListener {
 
     /**
      * Remove selected PropertyChangeListener form list of listeners
+     * 
      * @param listener - which PropertyChangeListener should be removed
      */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
@@ -87,7 +89,6 @@ public class Controller implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("PropertyChanged");
         if (evt.getPropertyName() == "directionChanged") {
             if (!((lastMoved == Direction.UP && (Direction) evt.getNewValue() == Direction.DOWN)
                     || (lastMoved == Direction.DOWN && (Direction) evt.getNewValue() == Direction.UP)
