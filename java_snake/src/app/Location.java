@@ -7,7 +7,11 @@ public class Location {
 
     public int x;
     public int y;
-
+/**
+ * Simple constructor for class Location
+ * @param X 
+ * @param Y
+ */
     public Location(int X, int Y) {
         x = X;
         y = Y;
