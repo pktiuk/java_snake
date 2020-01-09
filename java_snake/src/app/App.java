@@ -14,13 +14,13 @@ public class App {
         System.out.println("Game started");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                int x = 40;
-                int y = 40;
+                int x = 30;
+                int y = 30;
                 try {
                     if (args.length >= 1) {
-                        x = Integer.parseInt(args[1]);
+                        x = Integer.parseInt(args[0]);
                         if (args.length >= 2) {
-                            y = Integer.parseInt(args[2]);
+                            y = Integer.parseInt(args[1]);
                         }
                     }
                 } catch (NumberFormatException e) {

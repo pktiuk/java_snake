@@ -173,7 +173,7 @@ public class Model implements PropertyChangeListener {
      */
     public boolean[][] getFilledTiles() {
         boolean filledTiles[][] = new boolean[gridX][];
-        for (int i = 0; i < gridY; i++) {
+        for (int i = 0; i < gridX; i++) {
             filledTiles[i] = wall[i].clone();
         }
         int a, begin, end;
